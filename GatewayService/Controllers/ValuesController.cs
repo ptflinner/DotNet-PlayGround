@@ -10,11 +10,20 @@ namespace GatewayService.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private readonly GithubClient _gitHubClient;
+
+        public ValuesController(GithubClient gitGitHubClient)
+        {
+            _gitHubClient = gitGitHubClient;
+        }
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public async Task<ActionResult<IEnumerable<string>>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var result = await _gitHubClient.getGithubRequest("");
+
+            return new string[] { result.ToString(), "value2" };
+            
         }
 
         // GET api/values/5
